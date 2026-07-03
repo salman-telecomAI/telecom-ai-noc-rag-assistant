@@ -1,2 +1,2 @@
-# telecom-ai-noc-rag-assistant
-AI-powered Telecom RAG Assistant using LLMs, Embeddings, Vector Databases, and Telecom Knowledge Bases for intelligent troubleshooting and operations support.
+# Telecom AI NOC RAG Assistant
+An enterprise-grade AI assistant for Telecom Network Operations Centers (NOC), built using Azure OpenAI, Retrieval-Augmented Generation (RAG), Azure AI Search, FastAPI, and Python.The assistant helps telecom engineers quickly search manuals, SOPs, RCA documents, alarm references, and network documentation to accelerate troubleshooting and reduce Mean Time to Repair (MTTR).
