@@ -1,15 +1,18 @@
-def create_embedding(text: str):
-    """
-    Placeholder embedding function.
-    """
+import os
+from dotenv import load_dotenv
+from langchain_openai import AzureOpenAIEmbeddings
 
-    return {
-        "text": text,
-        "vector_dimension": 1536,
-        "status": "Embedding generated (placeholder)"
-    }
+load_dotenv()
 
+embeddings = AzureOpenAIEmbeddings(
+    azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
+    api_key=os.getenv("AZURE_OPENAI_API_KEY"),
+    azure_deployment=os.getenv("AZURE_OPENAI_EMBEDDING_DEPLOYMENT"),
+    api_version=os.getenv("AZURE_OPENAI_API_VERSION"),
+)
 
 if __name__ == "__main__":
-    result = create_embedding("LOS Alarm on DWDM Link")
-    print(result)
+    vector = embeddings.embed_query("Loss of Signal alarm in DWDM")
+
+    print(f"Embedding dimensions: {len(vector)}")
+    print(vector[:10])

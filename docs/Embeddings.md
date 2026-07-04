@@ -1,40 +1,7 @@
-# Embeddings
+## Real Embedding Generation
 
-## Objective
+The application generates embeddings using the Azure OpenAI deployment:
 
-Generate vector representations of telecom documents for semantic search.
+text-embedding-3-small
 
-## Workflow
-
-Document
-
-↓
-
-Chunk
-
-↓
-
-Embedding Model
-
-↓
-
-Vector
-
-↓
-
-ChromaDB
-
-↓
-
-Semantic Search
-
-## Benefits
-
-- Semantic understanding
-- Faster retrieval
-- Improved AI accuracy
-- Enterprise scalability
-
-## Expected Outcome
-
-Every telecom document chunk is converted into an embedding before storage in the vector database.
+Each document chunk is converted into a vector before being stored in ChromaDB.

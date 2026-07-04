@@ -1,36 +1,10 @@
-# ChromaDB
+## Storing Embeddings
 
-## Objective
+Each telecom document chunk is stored together with:
 
-Store telecom document embeddings for semantic retrieval.
+- Chunk ID
+- Chunk Text
+- Embedding Vector
+- Metadata
 
-## Workflow
-
-Documents
-
-↓
-
-Embeddings
-
-↓
-
-ChromaDB
-
-↓
-
-Similarity Search
-
-↓
-
-Relevant Documents
-
-## Benefits
-
-- Fast vector search
-- Enterprise scalability
-- Easy integration
-- Improved retrieval accuracy
-
-## Expected Outcome
-
-Telecom document embeddings are indexed in ChromaDB and available for semantic search.
+This enables semantic retrieval based on vector similarity instead of keyword matching.

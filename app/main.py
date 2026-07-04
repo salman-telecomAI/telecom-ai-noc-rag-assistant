@@ -1,30 +1,43 @@
-from fastapi import FastAPI
-from pydantic import BaseModel
+from app.services.llm import ask_llm
+from app.rag.search import collection
+from app.rag.embeddings import embeddings
 
-app = FastAPI(
-    title="Telecom AI NOC RAG Assistant",
-    version="1.0.0"
-)
+print("=" * 60)
+print("Telecom AI NOC RAG Assistant")
+print("Type 'exit' to quit")
+print("=" * 60)
 
-class ChatRequest(BaseModel):
-    question: str
+while True:
+    question = input("\nQuestion: ")
 
-@app.get("/")
-def home():
-    return {
-        "message": "Telecom AI NOC RAG Assistant is running."
-    }
+    if question.lower() == "exit":
+        break
 
-@app.get("/health")
-def health():
-    return {
-        "status": "Healthy",
-        "application": "Telecom AI NOC RAG Assistant"
-    }
+    vector = embeddings.embed_query(question)
 
-@app.post("/chat")
-def chat(request: ChatRequest):
-    return {
-        "question": request.question,
-        "answer": "Placeholder AI response."
-    }
+    results = collection.query(
+        query_embeddings=[vector],
+        n_results=3
+    )
+
+    context = "\n\n".join(results["documents"][0])
+
+    prompt = f"""
+You are a Senior DWDM/NOC Engineer.
+
+Answer ONLY using the context below.
+
+Context:
+{context}
+
+Question:
+{question}
+
+Answer:
+"""
+
+    answer = ask_llm(prompt)
+
+    print("\nAnswer:\n")
+    print(answer)
+    print("\n" + "=" * 60)
