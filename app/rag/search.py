@@ -1,21 +1,31 @@
+import os
+
+from dotenv import load_dotenv
 from chromadb import PersistentClient
+
 from app.rag.embeddings import embeddings
 
-client = PersistentClient(path="data/chromadb")
-collection = client.get_collection("telecom_docs")
+load_dotenv()
 
-query = "What causes Loss of Signal alarm in DWDM?"
-
-vector = embeddings.embed_query(query)
-
-results = collection.query(
-    query_embeddings=[vector],
-    n_results=3
+client = PersistentClient(
+    path=os.getenv(
+        "CHROMA_DB_PATH",
+        "data/chromadb"
+    )
 )
 
-print("=" * 60)
+collection = client.get_collection(
+    "telecom_docs"
+)
 
-for i, doc in enumerate(results["documents"][0]):
-    print(f"\nResult {i+1}\n")
-    print(doc[:700])
-    print("\n" + "=" * 60)
+
+def search_documents(question: str, top_k: int = 3):
+
+    vector = embeddings.embed_query(question)
+
+    results = collection.query(
+        query_embeddings=[vector],
+        n_results=top_k
+    )
+
+    return results["documents"][0]
