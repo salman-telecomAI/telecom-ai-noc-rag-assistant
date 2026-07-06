@@ -352,6 +352,22 @@ This project demonstrates practical experience with:
 - Telecom AI Use Cases
 
 ---
+## Screenshots
+
+### Project Structure
+![Project Folder](images/screenshots/project-folder.png)
+
+### Swagger API
+![Swagger UI](images/screenshots/swagger-ui.png)
+
+### AI Response
+![Chat Response](images/screenshots/chat-response.png)
+
+### Docker
+![Docker Running](images/screenshots/docker-running.png)
+
+### GitHub Repository
+![GitHub Repository](images/screenshots/github-home.png)
 
 # License
 
