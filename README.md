@@ -1,171 +1,308 @@
-# Telecom AI NOC RAG Assistant
+# 🚀 Telecom AI NOC RAG Assistant
 
-An AI-powered Telecom Network Operations Center (NOC) assistant built using FastAPI, Azure OpenAI, ChromaDB and Retrieval-Augmented Generation (RAG).
+> **An AI-powered Retrieval-Augmented Generation (RAG) Assistant for Telecom Network Operations Centers (NOC), built with FastAPI, ChromaDB, SentenceTransformers, and OpenRouter.**
 
-The assistant helps telecom engineers answer technical questions using a telecom knowledge base and generates structured troubleshooting guidance for common network issues.
+<p align="center">
 
-This project was developed as a professional portfolio project to demonstrate practical AI engineering skills for Telecom AI, Azure OpenAI and RAG-based applications.
+![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=for-the-badge&logo=python)
+![FastAPI](https://img.shields.io/badge/FastAPI-Production-009688?style=for-the-badge&logo=fastapi)
+![OpenRouter](https://img.shields.io/badge/OpenRouter-LLM-orange?style=for-the-badge)
+![ChromaDB](https://img.shields.io/badge/Vector%20Database-ChromaDB-purple?style=for-the-badge)
+![SentenceTransformers](https://img.shields.io/badge/Embeddings-SentenceTransformers-green?style=for-the-badge)
+![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker)
+![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)
 
----
-
-# Project Overview
-
-Telecom engineers often need quick access to accurate troubleshooting information during fault investigation.
-
-Instead of manually searching through documents, this AI assistant retrieves the most relevant telecom knowledge and combines it with Azure OpenAI to generate clear, structured and easy-to-understand answers.
-
-The application focuses on optical transport and telecom network operations while demonstrating modern AI architecture using Retrieval-Augmented Generation (RAG).
+</p>
 
 ---
 
-# Project Objectives
+# 📖 Table of Contents
 
-The objectives of this project are:
+- Executive Summary
+- Why This Project?
+- Key Features
+- Solution Architecture
+- AI Request Flow
+- Project Structure
+- Technology Stack
+- Screenshots
+- Installation
+- Environment Variables
+- Building the Vector Database
+- Running the Application
+- API Documentation
+- Example Request & Response
+- Engineering Decisions
+- Skills Demonstrated
+- Roadmap
+- Future Improvements
+- License
+- Author
 
-- Build an AI-powered Telecom NOC Assistant.
-- Demonstrate Retrieval-Augmented Generation (RAG).
-- Integrate Azure OpenAI with FastAPI.
-- Store telecom knowledge in ChromaDB.
-- Containerize the application using Docker.
-- Create a professional GitHub portfolio project.
-- Demonstrate AI engineering skills during interviews.
+---
+
+# Executive Summary
+
+Telecom AI NOC RAG Assistant is a production-style Retrieval-Augmented Generation (RAG) application designed to assist telecom engineers in searching operational documentation using Artificial Intelligence.
+
+Instead of relying only on a Large Language Model (LLM), the application retrieves the most relevant technical documentation using semantic vector search before generating a response. This approach improves response quality, reduces hallucinations, and keeps answers grounded in the indexed telecom knowledge base.
+
+The project demonstrates how modern AI technologies can enhance Telecom Network Operations Centres (NOC) by reducing document search time, improving troubleshooting efficiency, and accelerating access to operational knowledge.
+
+---
+
+# Why This Project?
+
+Telecommunications engineers regularly work with:
+
+- Vendor documentation
+- Network operation procedures
+- Troubleshooting guides
+- Alarm manuals
+- Standard Operating Procedures (SOPs)
+- Configuration references
+
+Finding the correct information quickly can be difficult, particularly during live network incidents.
+
+This project demonstrates how Retrieval-Augmented Generation (RAG) can improve operational efficiency by combining semantic search with Large Language Models to produce accurate, context-aware answers based on approved documentation.
 
 ---
 
 # Key Features
 
-- AI-powered telecom troubleshooting assistant
-- Retrieval-Augmented Generation (RAG)
-- Azure OpenAI integration
-- ChromaDB vector database
-- FastAPI REST API
-- Interactive Swagger API documentation
-- Docker support
-- Git version control
-- Simple and modular project structure
+✅ Retrieval-Augmented Generation (RAG)
+
+✅ AI-powered Telecom Knowledge Assistant
+
+✅ FastAPI REST API
+
+✅ ChromaDB Vector Database
+
+✅ Local SentenceTransformer Embeddings
+
+✅ OpenRouter LLM Integration
+
+✅ Semantic Vector Search
+
+✅ Swagger/OpenAPI Documentation
+
+✅ Modular Project Architecture
+
+✅ Docker Ready
+
+✅ Production-style Folder Structure
 
 ---
 
-# System Architecture
+# Solution Architecture
 
-```text
-                 User
-                   │
-                   ▼
-             FastAPI API
-                   │
-                   ▼
-            RAG Retrieval
-                   │
-                   ▼
-             ChromaDB
-                   │
-                   ▼
-          Azure OpenAI GPT
-                   │
-                   ▼
-            AI Response
+```
+                     User
+                       │
+                       ▼
+               FastAPI REST API
+                       │
+                       ▼
+                 RAG Service
+                       │
+        ┌──────────────┴──────────────┐
+        │                             │
+        ▼                             ▼
+SentenceTransformers             ChromaDB
+(Local Embeddings)         (Vector Database)
+        │                             │
+        └──────────────┬──────────────┘
+                       │
+                       ▼
+                 OpenRouter API
+                       │
+                       ▼
+             Large Language Model
+                       │
+                       ▼
+               AI Generated Answer
 ```
 
 ---
 
-# Technology Stack
+# AI Request Flow
 
-| Technology | Purpose |
-|------------|---------|
-| Python | Programming Language |
-| FastAPI | REST API Framework |
-| Azure OpenAI | Large Language Model |
-| ChromaDB | Vector Database |
-| Docker | Containerization |
-| Git | Version Control |
-| GitHub | Source Code Repository |
-| VS Code | Development Environment |
+```
+User Question
+      │
+      ▼
+POST /chat
+      │
+      ▼
+Validate Request
+      │
+      ▼
+Generate Embedding
+      │
+      ▼
+Semantic Vector Search
+      │
+      ▼
+Retrieve Relevant Context
+      │
+      ▼
+Construct Prompt
+      │
+      ▼
+OpenRouter LLM
+      │
+      ▼
+Generate AI Response
+      │
+      ▼
+Return JSON Response
+```
 
 ---
 
-# Project Folder Structure
+# Project Structure
 
 ```text
-telecom-ai-noc-rag-assistant
+telecom-ai-noc-rag-assistant/
 │
-├── app
+├── app/
+│   ├── core/
+│   ├── rag/
+│   ├── services/
 │   ├── api.py
-│   ├── core
-│   ├── rag
-│   ├── services
-│   └── utils
+│   ├── cli_chat.py
+│   └── main.py
 │
-├── architecture
-├── config
-├── data
-├── docs
-├── images
-├── logs
-├── prompts
-├── scripts
-├── tests
+├── architecture/
+├── config/
+├── data/
+├── docs/
+├── images/
+│   └── screenshots/
+│
+├── tests/
 │
 ├── Dockerfile
 ├── requirements.txt
 ├── .env.example
-├── .gitignore
-├── .dockerignore
 ├── README.md
-├── PROJECT_GUIDE.md
-├── CHANGELOG.md
 └── LICENSE
 ```
 
+### Folder Overview
+
+| Folder | Description |
+|---------|-------------|
+| app | Main application source code |
+| rag | Retrieval-Augmented Generation pipeline |
+| services | LLM integration and orchestration |
+| core | Validation and utility functions |
+| architecture | Solution diagrams and design documents |
+| docs | Project documentation |
+| images | Screenshots and diagrams |
+| tests | Unit and integration tests |
 ---
 
-# How the Application Works
+# 💻 Technology Stack
 
-1. User submits a telecom question.
-2. FastAPI receives the request.
-3. ChromaDB searches the telecom knowledge base.
-4. Relevant documents are retrieved.
-5. Azure OpenAI receives the retrieved context.
-6. AI generates a structured answer.
-7. Response is returned to the user.
+| Layer | Technology |
+|--------|------------|
+| Programming Language | Python 3.11+ |
+| API Framework | FastAPI |
+| Vector Database | ChromaDB |
+| Embeddings | SentenceTransformers (`all-MiniLM-L6-v2`) |
+| Large Language Model | OpenRouter |
+| HTTP Client | OpenAI SDK |
+| API Documentation | Swagger / OpenAPI |
+| Containerisation | Docker |
+| Version Control | Git & GitHub |
 
 ---
 
-# Installation
+# 📸 Project Screenshots
 
-Clone the repository
+## 📁 Project Structure
+
+A modular production-ready project structure with clear separation of API, RAG pipeline, services, and supporting resources.
+
+![Project Structure](images/screenshots/project-folder.png)
+
+---
+
+## 🌐 Swagger API Documentation
+
+Interactive API documentation generated automatically by FastAPI.
+
+Features include:
+
+- Live API testing
+- Request validation
+- JSON schema
+- Automatic documentation
+
+![Swagger](images/screenshots/swagger-ui.png)
+
+---
+
+## 🤖 AI Chat Response
+
+Example of a successful Retrieval-Augmented Generation (RAG) response.
+
+The assistant retrieves relevant telecom documentation before generating an AI response.
+
+![Chat Response](images/screenshots/chat-response.png)
+
+---
+
+## 🏗 Solution Architecture
+
+High-level architecture illustrating the interaction between FastAPI, SentenceTransformers, ChromaDB, OpenRouter, and the Large Language Model.
+
+![Architecture](images/screenshots/architecture-diagram.png)
+
+---
+
+## 🐳 Docker Deployment *(Optional)*
+
+Application running inside Docker.
+
+![Docker](images/screenshots/docker-running.png)
+
+---
+
+# ⚙️ Installation
+
+## Clone Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/telecom-ai-noc-rag-assistant.git
-```
+git clone https://github.com/YOUR_GITHUB_USERNAME/telecom-ai-noc-rag-assistant.git
 
-Go to the project directory
-
-```bash
 cd telecom-ai-noc-rag-assistant
 ```
 
-Create a virtual environment
+---
 
-```bash
-python -m venv .venv
-```
-
-Activate the virtual environment
+## Create Virtual Environment
 
 Windows
 
 ```bash
+python -m venv .venv
+
 .venv\Scripts\activate
 ```
 
 Linux / macOS
 
 ```bash
+python3 -m venv .venv
+
 source .venv/bin/activate
 ```
 
-Install dependencies
+---
+
+## Install Dependencies
 
 ```bash
 pip install -r requirements.txt
@@ -173,43 +310,61 @@ pip install -r requirements.txt
 
 ---
 
-# Environment Variables
+# 🔐 Environment Variables
 
-Create a file named
+Create a `.env` file in the project root.
 
-```text
-.env
+Example:
+
+```env
+OPENROUTER_API_KEY=your_openrouter_api_key_here
+
+OPENROUTER_MODEL=openai/gpt-4.1-mini
+
+CHROMA_DB_PATH=data/chromadb
 ```
 
-Add your Azure OpenAI configuration.
+> **Important:** Never commit your `.env` file. Only commit `.env.example`.
+
+---
+
+# 📚 Build the Vector Database
+
+After adding or updating documents, rebuild the vector database:
+
+```bash
+python -m app.rag.vector_store
+```
+
+Expected output:
 
 ```text
-AZURE_OPENAI_ENDPOINT=
-
-AZURE_OPENAI_API_KEY=
-
-AZURE_OPENAI_CHAT_DEPLOYMENT=
-
-AZURE_OPENAI_EMBEDDING_DEPLOYMENT=
+Indexed XXX chunks successfully.
 ```
 
 ---
 
-# Running the Application
+# ▶️ Run the Application
 
-Start FastAPI
+Start the FastAPI server:
 
 ```bash
-uvicorn app.api:app --reload
+uvicorn app.main:app --reload
 ```
 
-Open Swagger UI
+The application will be available at:
+
+```text
+http://127.0.0.1:8000
+```
+
+Swagger UI:
 
 ```text
 http://127.0.0.1:8000/docs
 ```
 
-Health Check
+Health Check:
 
 ```text
 http://127.0.0.1:8000/health
@@ -217,21 +372,23 @@ http://127.0.0.1:8000/health
 
 ---
 
-# Docker
+# 🐳 Docker
 
-Build Docker Image
-
-```bash
-docker build -t telecom-ai-rag .
-```
-
-Run Docker Container
+## Build Image
 
 ```bash
-docker run -p 8000:8000 telecom-ai-rag
+docker build -t telecom-ai-noc-rag-assistant .
 ```
 
-Open Swagger
+---
+
+## Run Container
+
+```bash
+docker run -p 8000:8000 telecom-ai-noc-rag-assistant
+```
+
+Open:
 
 ```text
 http://localhost:8000/docs
@@ -239,160 +396,299 @@ http://localhost:8000/docs
 
 ---
 
-# API Endpoints
+# 📡 API Endpoints
 
 | Method | Endpoint | Description |
-|---------|----------|-------------|
-| GET | / | Home |
-| GET | /health | Health Check |
-| POST | /chat | Ask Telecom Questions |
+|----------|----------|-------------|
+| GET | `/` | Application welcome message |
+| GET | `/health` | Health check |
+| POST | `/chat` | Ask the AI assistant |
 
 ---
 
-# Example Questions
+# 🧪 Example API Request
 
-- What is EDFA?
-- Explain LOS Alarm.
-- What causes High BER?
-- What is Optical Power?
-- Explain Fiber Cut Alarm.
-- What is OSNR?
-- What is DWDM?
-- Explain OTDR.
-- How do you troubleshoot low receive power?
-- What causes CRC errors?
-
----
-
-# Example AI Response Format
-
-Definition
-
-Possible Causes
-
-Troubleshooting Steps
-
-Recommended Action
-
-Related Commands (if applicable)
-
----
-
-# Screenshots
-
-Add screenshots inside the images folder.
-
-Recommended screenshots:
-
-- Project Folder Structure
-- Swagger UI
-- Chat Response
-- Docker Running
-- GitHub Repository
-- Architecture Diagram
-
-Example
-
-```text
-images/
-    project-folder.png
-    swagger-ui.png
-    chat-response.png
-    docker-running.png
-    github-home.png
-    architecture-diagram.png
+```json
+{
+    "question": "What is a Loss of Signal (LOS) alarm in DWDM?"
+}
 ```
 
 ---
 
-# Current Project Status
+# ✅ Example API Response
 
-Version: 1.0
-
-Status:
-
-Completed
-
-- FastAPI API
-- Azure OpenAI Integration
-- ChromaDB Integration
-- RAG Retrieval
-- Docker Support
-- GitHub Repository
-- Swagger Documentation
+```json
+{
+    "answer": "A Loss of Signal (LOS) alarm indicates that the receiving equipment is no longer detecting an incoming optical signal. It is commonly caused by fibre cuts, connector issues, transmitter failures, or excessive optical attenuation."
+}
+```
 
 ---
 
-# Future Improvements
+# 🔍 Testing the API
 
-Future enhancements may include:
+Using Swagger:
 
-- Authentication
-- Multiple telecom knowledge bases
-- Chat history
-- User feedback
-- Azure deployment
-- CI/CD pipeline
+1. Open `/docs`
+2. Expand **POST /chat**
+3. Click **Try it out**
+4. Enter a telecom-related question
+5. Click **Execute**
+6. Review the AI-generated response
+
+The API returns structured JSON responses and automatically validates incoming requests.
+
+---
+
+# 🏗 Engineering Decisions
+
+This project was intentionally designed using a modern Retrieval-Augmented Generation (RAG) architecture to provide accurate, context-aware responses while minimizing AI hallucinations.
+
+## Why FastAPI?
+
+- High-performance asynchronous Python framework
+- Automatic OpenAPI/Swagger documentation
+- Excellent developer experience
+- Production-ready REST API support
+
+---
+
+## Why ChromaDB?
+
+ChromaDB provides a lightweight vector database that is ideal for Retrieval-Augmented Generation applications.
+
+Benefits include:
+
+- Fast semantic similarity search
+- Simple local deployment
+- No external database required
+- Easy integration with Python
+
+---
+
+## Why SentenceTransformers?
+
+The project uses the **all-MiniLM-L6-v2** embedding model because it:
+
+- Runs locally
+- Produces high-quality semantic embeddings
+- Eliminates embedding API costs
+- Simplifies deployment
+- Is widely adopted in production RAG systems
+
+---
+
+## Why OpenRouter?
+
+OpenRouter provides a unified interface to multiple Large Language Models.
+
+Advantages include:
+
+- Model flexibility
+- Cost efficiency
+- OpenAI-compatible API
+- Easy model switching without code changes
+
+---
+
+## Why Retrieval-Augmented Generation (RAG)?
+
+Instead of relying solely on an LLM's pretrained knowledge, RAG retrieves relevant information from a domain-specific knowledge base before generating a response.
+
+Benefits include:
+
+- Reduced hallucinations
+- More accurate answers
+- Explainable responses
+- Easy knowledge base updates without retraining
+
+---
+
+# 🧠 Skills Demonstrated
+
+## Artificial Intelligence
+
+- Retrieval-Augmented Generation (RAG)
+- Semantic Search
+- Vector Embeddings
+- Prompt Engineering
+- LLM Integration
+- Context-Aware AI Systems
+
+---
+
+## Backend Development
+
+- Python
+- FastAPI
+- REST APIs
+- JSON Processing
+- Pydantic Validation
+- Modular Application Design
+
+---
+
+## AI Infrastructure
+
+- ChromaDB
+- SentenceTransformers
+- OpenRouter
+- Docker
+- Environment Configuration
+
+---
+
+## Software Engineering
+
+- Git
+- GitHub
+- Clean Architecture
+- Documentation
+- API Design
+- Project Organisation
+
+---
+
+# 📈 Project Roadmap
+
+| Version | Status | Description |
+|----------|--------|-------------|
+| v1.0 | ✅ Completed | Initial RAG implementation |
+| v2.0 | ✅ Completed | Migrated from Azure OpenAI to OpenRouter |
+| v3.0 | ✅ Completed | Production documentation and GitHub portfolio |
+| v3.1 | 🔄 Planned | Source citations |
+| v3.2 | 🔄 Planned | Conversation memory |
+| v3.3 | 🔄 Planned | Hybrid keyword + semantic search |
+| v3.4 | 🔄 Planned | Authentication and user management |
+| v4.0 | 🔄 Planned | Cloud deployment with CI/CD |
+
+---
+
+# 🚀 Future Improvements
+
+Planned enhancements include:
+
+- Conversation memory
+- Source citations
+- Hybrid search
+- Streaming responses
+- Multi-document retrieval
+- User authentication
+- Role-based access
+- Admin dashboard
+- CI/CD with GitHub Actions
+- Cloud deployment (Azure, Render, Railway)
 - Monitoring and logging
-- Role-based access control
+- Performance benchmarking
 
 ---
 
-# Learning Outcomes
+# 📚 Lessons Learned
 
-This project demonstrates practical experience with:
+During development, the project evolved from an Azure OpenAI-based prototype into a more portable and cost-effective solution.
+
+Key improvements included:
+
+- Migrating from Azure OpenAI to OpenRouter
+- Replacing cloud embeddings with local SentenceTransformers
+- Rebuilding the ChromaDB vector database
+- Separating the CLI chatbot from the FastAPI application
+- Improving project structure for maintainability
+- Enhancing documentation for open-source publication
+
+These changes reduced infrastructure dependencies while making the project easier to run, maintain, and demonstrate.
+
+---
+
+# 🤝 Contributing
+
+Contributions, suggestions, and improvements are welcome.
+
+If you have ideas for new features or enhancements:
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Open a Pull Request
+
+---
+
+# 📄 License
+
+This project is licensed under the **MIT License**.
+
+See the `LICENSE` file for details.
+
+---
+
+# 👨‍💻 Author
+
+**<PRIVATE_PERSON>**
+
+Telecommunications • Artificial Intelligence • Network Automation • Cloud Technologies
+
+Areas of interest:
+
+- Telecom AI
+- AI Engineering
+- Network Automation
+- Intelligent Network Operations
+- Cloud-native AI Applications
+
+---
+
+# 🙏 Acknowledgements
+
+This project builds upon several outstanding open-source technologies:
 
 - FastAPI
-- Azure OpenAI
-- Retrieval-Augmented Generation (RAG)
 - ChromaDB
+- SentenceTransformers
+- OpenRouter
+- Python
 - Docker
-- GitHub
-- AI Application Development
-- Telecom AI Use Cases
 
----
-## Screenshots
-
-### Project Structure
-![Project Folder](images/screenshots/project-folder.png)
-
-### Swagger API
-![Swagger UI](images/screenshots/swagger-ui.png)
-
-### AI Response
-![Chat Response](images/screenshots/chat-response.png)
-
-### Docker
-![Docker Running](images/screenshots/docker-running.png)
-
-### GitHub Repository
-![GitHub Repository](images/screenshots/github-home.png)
-
-# License
-
-This project is licensed under the MIT License.
-
-See the LICENSE file for details.
+Special thanks to the open-source community for making modern AI development accessible.
 
 ---
 
-# Author
+# 📝 Version History
 
-Salman Shahid
+## v3.0.0
 
-Telecom AI | Azure AI | Network Automation
+### Added
 
-GitHub
+- Professional project documentation
+- Architecture diagrams
+- Request flow diagrams
+- Engineering decision documentation
+- Portfolio-ready README
+- Enhanced screenshots
+- Skills and roadmap sections
 
-https://github.com/YOUR_USERNAME
+### Improved
 
-LinkedIn
+- Project structure
+- Installation guide
+- API documentation
+- Developer experience
 
-https://www.linkedin.com/in/YOUR_PROFILE
+### Previous Major Release (v2.0.0)
+
+- Migrated from Azure OpenAI to OpenRouter
+- Replaced Azure embeddings with SentenceTransformers
+- Rebuilt ChromaDB vector database
+- Restored FastAPI architecture
+- Added CLI chatbot
+- Updated configuration and environment management
 
 ---
 
-# Acknowledgements
+# ⭐ Final Notes
 
-Special thanks to Microsoft Azure OpenAI, FastAPI, ChromaDB and the open-source community for providing the technologies used in this project.
+This repository demonstrates the design and implementation of a production-style AI application that combines semantic search, Retrieval-Augmented Generation (RAG), and Large Language Models to solve a real-world telecom knowledge retrieval problem.
+
+It is intended as both a learning project and a portfolio piece showcasing modern AI engineering practices, modular backend development, and domain-specific AI integration.
+
+If you found this project useful, consider giving it a ⭐ on GitHub.

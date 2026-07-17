@@ -1,23 +1,23 @@
 import os
 from dotenv import load_dotenv
-from openai import AzureOpenAI
+from openai import OpenAI
 
 load_dotenv()
 
-client = AzureOpenAI(
-    api_key=os.getenv("AZURE_OPENAI_API_KEY"),
-    azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
-    api_version=os.getenv("AZURE_OPENAI_API_VERSION"),
+client = OpenAI(
+    api_key=os.getenv("OPENROUTER_API_KEY"),
+    base_url="https://openrouter.ai/api/v1",
 )
+
 
 def ask_llm(prompt):
     response = client.chat.completions.create(
-        model=os.getenv("AZURE_OPENAI_CHAT_DEPLOYMENT"),
-        messages=[
-            {"role": "user", "content": prompt}
-        ]
+        model=os.getenv("OPENROUTER_MODEL"),
+        messages=[{"role": "user", "content": prompt}],
     )
+
     return response.choices[0].message.content
+
 
 if __name__ == "__main__":
     print(ask_llm("What is a Loss of Signal (LOS) alarm in DWDM?"))

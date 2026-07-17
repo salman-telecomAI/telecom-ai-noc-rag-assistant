@@ -10,10 +10,7 @@ def generate_answer(question: str, top_k: int = 3):
     try:
 
         if not question.strip():
-            raise HTTPException(
-                status_code=400,
-                detail="Question cannot be empty."
-            )
+            raise HTTPException(status_code=400, detail="Question cannot be empty.")
 
         logger.info(f"Question received: {question}")
 
@@ -25,7 +22,7 @@ def generate_answer(question: str, top_k: int = 3):
             return {
                 "question": question,
                 "answer": "No relevant telecom information found.",
-                "context": []
+                "context": [],
             }
 
         logger.info(f"{len(documents)} document(s) retrieved.")
@@ -46,17 +43,13 @@ Question:
 Answer:
 """
 
-        logger.info("Sending request to Azure OpenAI...")
+        logger.info("Sending request to OpenRouter...")
 
         answer = ask_llm(prompt)
 
         logger.info("Answer generated successfully.")
 
-        return {
-            "question": question,
-            "answer": answer,
-            "context": documents
-        }
+        return {"question": question, "answer": answer, "context": documents}
 
     except HTTPException:
         raise
@@ -65,7 +58,4 @@ Answer:
 
         logger.exception("Unexpected application error.")
 
-        raise HTTPException(
-            status_code=500,
-            detail=str(e)
-        )
+        raise HTTPException(status_code=500, detail=str(e))

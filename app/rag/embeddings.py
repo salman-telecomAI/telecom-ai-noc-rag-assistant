@@ -1,15 +1,19 @@
-import os
-from dotenv import load_dotenv
-from langchain_openai import AzureOpenAIEmbeddings
+from sentence_transformers import SentenceTransformer
 
-load_dotenv()
+# Lightweight local embedding model
+_model = SentenceTransformer("all-MiniLM-L6-v2")
 
-embeddings = AzureOpenAIEmbeddings(
-    azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
-    api_key=os.getenv("AZURE_OPENAI_API_KEY"),
-    azure_deployment=os.getenv("AZURE_OPENAI_EMBEDDING_DEPLOYMENT"),
-    api_version=os.getenv("AZURE_OPENAI_API_VERSION"),
-)
+
+class LocalEmbeddings:
+    def embed_query(self, text: str):
+        return _model.encode(text, convert_to_numpy=True).tolist()
+
+    def embed_documents(self, texts):
+        return _model.encode(texts, convert_to_numpy=True).tolist()
+
+
+embeddings = LocalEmbeddings()
+
 
 if __name__ == "__main__":
     vector = embeddings.embed_query("Loss of Signal alarm in DWDM")
