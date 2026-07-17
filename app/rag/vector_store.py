@@ -6,7 +6,17 @@ from app.rag.embeddings import embeddings
 
 client = PersistentClient(path="data/chromadb")
 
-collection = client.get_or_create_collection("telecom_docs")
+COLLECTION_NAME = "telecom_docs"
+
+# Delete old collection if it exists
+try:
+    client.delete_collection(COLLECTION_NAME)
+    print("Old collection deleted.")
+except Exception:
+    print("No existing collection found.")
+
+# Create a fresh collection
+collection = client.create_collection(COLLECTION_NAME)
 
 docs = load_documents()
 
