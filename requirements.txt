@@ -1,8 +1,9 @@
 fastapi
 uvicorn
-python-dotenv
-openai>=1.30.0
 chromadb
 sentence-transformers
-pydantic
-uvicorn[standard]
+langchain
+langchain-community
+pypdf
+python-dotenv
+openai
