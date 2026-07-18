@@ -49,19 +49,20 @@ Answer:
 
         logger.info("Answer generated successfully.")
 
-        return {"question": question, "answer": answer, "context": documents}
+        return {
+            "question": question,
+            "answer": answer,
+            "context": documents,
+        }
 
     except HTTPException:
         raise
 
     except Exception as e:
-    import traceback
+        import traceback
 
-    traceback.print_exc()
+        traceback.print_exc()
 
-    logger.exception("Unexpected application error.")
+        logger.exception("Unexpected application error.")
 
-    raise HTTPException(
-        status_code=500,
-        detail=f"{type(e).__name__}: {str(e)}"
-    )
+        raise HTTPException(status_code=500, detail=f"{type(e).__name__}: {str(e)}")
