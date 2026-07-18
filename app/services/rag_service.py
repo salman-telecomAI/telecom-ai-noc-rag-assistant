@@ -55,7 +55,13 @@ Answer:
         raise
 
     except Exception as e:
+    import traceback
 
-        logger.exception("Unexpected application error.")
+    traceback.print_exc()
 
-        raise HTTPException(status_code=500, detail=str(e))
+    logger.exception("Unexpected application error.")
+
+    raise HTTPException(
+        status_code=500,
+        detail=f"{type(e).__name__}: {str(e)}"
+    )
